@@ -27,11 +27,11 @@
         "ElkInstanceType": {
             "Description": "EC2 instance type",
             "Type": "String",
-            "Default": "t2.medium",
+            "Default": "m3.medium",
             "AllowedValues": [
-                "t2.micro",
-                "t2.small",
-                "t2.medium"
+                "m3.medium",
+                "m3.large",
+                "r3.large"
             ],
             "ConstraintDescription": "must be a valid EC2 instance type"
         },
