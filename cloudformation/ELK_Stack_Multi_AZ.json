@@ -6,7 +6,7 @@
     "Parameters": {
 
         "KeyName": {
-            "Default": "bootstrap",
+            "Default": "deploy",
             "Description": "Name of an existing EC2 KeyPair for SSH access",
             "Type": "String"
         },
@@ -33,7 +33,7 @@
                 "m3.large",
                 "r3.large"
             ],
-            "ConstraintDescription": "must be a valid EC2 instance type"
+            "ConstraintDescription": "must be an allowed EC2 instance type (m3.medium, m3.large, r3.large)"
         },
         "GoogleOAuthClientId": {
             "Description": "Google OAuth 2.0 Client ID",
@@ -46,6 +46,7 @@
         "HostedZoneName": {
             "Description": "Route53 Hosted Zone in which kibana aliases will be created",
             "Type": "String"
+            "Default": "palomarsystems.com.",
         }
     },
 

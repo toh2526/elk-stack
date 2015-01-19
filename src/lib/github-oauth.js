@@ -81,7 +81,7 @@ function findUser(profile, accessToken, config, callback)  {
         if (!error && response.statusCode == 200) {
             var orgs = JSON.parse(body)
             for(var i=0; i<orgs.length; i++) {
-                if (orgs[i].login === 'guardian') {
+                if (orgs[i].login === 'palomarsystems') {
                     return callback(true, username)
                 }
             }
