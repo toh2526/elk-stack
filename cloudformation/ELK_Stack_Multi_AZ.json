@@ -45,8 +45,8 @@
         },
         "HostedZoneName": {
             "Description": "Route53 Hosted Zone in which kibana aliases will be created",
-            "Type": "String"
-            "Default": "palomarsystems.com.",
+            "Type": "String",
+            "Default": "palomarsystems.com."
         }
     },
 
