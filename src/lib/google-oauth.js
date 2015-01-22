@@ -69,7 +69,7 @@ function nonAuthenticated(config, url) {
 function findUser(profile, accessToken, config, callback)  {
     var username = profile.displayName || 'unknown'
 
-    if (profile._json.email.split('@')[1] === 'palomarsystems.com') {
+    if (profile._json.email.split('@')[1] === '@@OAUTH_ALLOWED_DOMAIN') {
         return callback(true, username)
     } else {
         console.log('access refused to: ' + username)
