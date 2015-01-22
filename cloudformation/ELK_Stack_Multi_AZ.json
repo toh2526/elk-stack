@@ -45,7 +45,8 @@
         },
         "GoogleOAuthAllowedDomain": {
             "Description": "Google OAuth 2.0 Allowed Domain",
-            "Type": "String"
+            "Type": "String",
+            "Default": "palomarsystems.com"
         },
         "HostName": {
             "Description": "HostName that Kibana will regard as default",
