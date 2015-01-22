@@ -171,7 +171,9 @@
                             "tar zxvf elk-stack.tar.gz",
                             "mv elk-stack-master/src logcabin",
 
-                            "sed -i -e 's,@@OAUTH_ALLOWED_DOMAIN,{ "Ref": "GoogleOAuthAllowedDomain" },g' /opt/logcabin/lib/google-oauth.js",
+                            { "Fn::Join": [ "", [ "sed -i",
+                                " -e 's,@@OAUTH_ALLOWED_DOMAIN,", { "Ref": "GoogleOAuthAllowedDomain" }, ",g'",
+                                " /opt/logcabin/lib/google-oauth.js" ] ] },
                             { "Fn::Join": [ "", [ "sed -i",
                                 " -e 's,@@LOGCABIN_HOST,", { "Ref": "HostName" }, ",g'",
                                 " -e 's,@@CLIENT_ID,", { "Ref": "GoogleOAuthClientId" }, ",g'",
