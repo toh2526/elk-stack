@@ -100,6 +100,7 @@
               "ScalingAdjustment": "1"
             }
         },
+
 			"ElkCPUAlarmHigh": {
 			   "Type": "AWS::CloudWatch::Alarm",
 			   "Properties": {
@@ -117,7 +118,7 @@
 			      "ComparisonOperator": "GreaterThanThreshold",
 			      "MetricName": "CPUUtilization"
 			   }
-			}
+			},
 
         "ElkLaunchConfig": {
             "Type": "AWS::AutoScaling::LaunchConfiguration",
