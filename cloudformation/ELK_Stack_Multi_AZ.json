@@ -66,6 +66,14 @@
                 "DesiredCapacity": { "Ref": "ElkCapacity" },
                 "HealthCheckType": "EC2",
                 "HealthCheckGracePeriod": 300,
+                "NotificationConfiguration": {
+						"NotificationTypes": [
+                    "autoscaling:EC2_INSTANCE_LAUNCH",
+                    "autoscaling:EC2_INSTANCE_TERMINATE",
+                    "autoscaling:TEST_NOTIFICATION"
+                  ],
+						"TopicARN": { "Ref": "ElkTriggerSNSTopic" }
+                },
                 "Tags": [
                     {
                         "Key": "Stage",
@@ -91,13 +99,22 @@
             }
         },
 
-        "ElkScalingPolicy": {
+        "ElkScaleUpPolicy": {
             "Type": "AWS::AutoScaling::ScalingPolicy",
             "Properties": {
               "AdjustmentType": "ChangeInCapacity",
               "AutoScalingGroupName": { "Ref": "ElkAutoscalingGroup" },
-              "Cooldown": "180",
+              "Cooldown": "300",
               "ScalingAdjustment": "1"
+            }
+        },
+        "ElkScaleDownPolicy": {
+            "Type": "AWS::AutoScaling::ScalingPolicy",
+            "Properties": {
+              "AdjustmentType": "ChangeInCapacity",
+              "AutoScalingGroupName": { "Ref": "ElkAutoscalingGroup" },
+              "Cooldown": "60",
+              "ScalingAdjustment": "-1"
             }
         },
 
@@ -109,7 +126,7 @@
 			      "Threshold": "80",
 			      "AlarmDescription": "Alarm if CPU too high or metric disappears indicating instance is down",
 			      "Period": "60",
-			      "AlarmActions": [ { "Ref": "ElkScalingPolicy" } ],
+			      "AlarmActions": [ { "Ref": "ElkScaleUpPolicy" } ],
 			      "Namespace": "AWS/EC2",
 			      "Dimensions": [ {
 			         "Name": "AutoScalingGroupName",
@@ -117,6 +134,38 @@
 			      } ],
 			      "ComparisonOperator": "GreaterThanThreshold",
 			      "MetricName": "CPUUtilization"
+			   }
+			},
+			"ElkCPUAlarmLow": {
+			   "Type": "AWS::CloudWatch::Alarm",
+			   "Properties": {
+			      "EvaluationPeriods": "1",
+			      "Statistic": "Average",
+			      "Threshold": "30",
+			      "AlarmDescription": "Alarm if CPU is back to normal",
+			      "Period": "60",
+			      "AlarmActions": [ { "Ref": "ElkScaleDownPolicy" } ],
+			      "Namespace": "AWS/EC2",
+			      "Dimensions": [ {
+			         "Name": "AutoScalingGroupName",
+			         "Value": { "Ref": "ElkAutoscalingGroup" }
+			      } ],
+			      "ComparisonOperator": "LessThanOrEqualToThreshold",
+			      "MetricName": "CPUUtilization"
+			   }
+			},
+
+			"ElkTriggerSNSTopic": {
+			   "Type": "AWS::SNS::Topic",
+			   "Properties": {
+			      "DisplayName": "Palomar-ELK-Scale-Trigger",
+			      "TopicName": "Palomar-ELK-Scale-Trigger",
+               "Subscription": [
+						{
+						   "Endpoint": "http://54.251.12.68/scale",
+						   "Protocol": "http"
+						}
+               ]
 			   }
 			},
 
