@@ -22,7 +22,7 @@
             "Type": "Number",
             "Default": "1",
             "MinValue": 1,
-            "MaxValue": 12
+            "MaxValue": 2
         },
         "ElkInstanceType": {
             "Description": "EC2 instance type",
