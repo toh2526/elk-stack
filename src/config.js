@@ -3,7 +3,7 @@ module.exports =  {
     'listen_port': 8080,
     'cookie_secret': '@@COOKIE_SECRET',
     'oauth_unauthenticated': ['/__es/', '/__es/_cat/health'],
-    // 'oauth_application_name': 'logcabin',
+    // 'oauth_application_name': 'palomar-elk',
     'oauth_client_id': '@@CLIENT_ID',
     'oauth_client_secret': '@@CLIENT_SECRET',
     'allowed_domain': '@@ALLOWED_DOMAIN',
